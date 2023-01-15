@@ -16,7 +16,7 @@ module.exports = {
                     { name: '\u200B', value: '\u200B' },
                 )
                 .setTimestamp()
-            interaction.reply({ embeds: [exampleEmbed] });
+           if (interaction) interaction.reply({ embeds: [exampleEmbed] });
             
         });
 	},
