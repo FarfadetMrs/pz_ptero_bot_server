@@ -122,8 +122,7 @@ const getPlayersOnline = (callback) =>{
 //Function pour savoir si un mod a été mis a jour ou pas : return bool
 const checkIfModNeedsUpdate = (callback) => {
     console.log("Check if a mod has been updated...")
-
-    const mod_updated_sentence = "CheckModsNeedUpdate: Mods updated"
+    const mod_updated_sentence = "Mods updated"
 
     var url = `${server_addr}/api/client/servers/${server_id}/command`;
     var xhr = new XMLHttpRequest();
@@ -141,7 +140,9 @@ const checkIfModNeedsUpdate = (callback) => {
                 //Get file content console.txt after few ms
                 setTimeout(() => {
                     getConsoleFileContent(function (file_content) {
-                        const str_mod = file_content.slice(file_content.length - 1000);
+                        const str_mod = file_content.substring(file_content.lastIndexOf("CheckModsNeedUpdate"),file_content.lastIndexOf("CheckModsNeedUpdate") + 100);
+                        console.log(str_mod);
+                        if (str_mod.includes("Checking...")) return;
                         if (str_mod.includes(mod_updated_sentence)) {
                             console.log("Les mods sont a jour");
                         }
@@ -151,7 +152,7 @@ const checkIfModNeedsUpdate = (callback) => {
                         if (callback) callback(!str_mod.includes(mod_updated_sentence));
                     });
                 },
-                    500);
+                    1000);
             }
             else {
                 console.error("Request error");
