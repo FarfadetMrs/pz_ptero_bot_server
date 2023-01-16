@@ -89,6 +89,7 @@ const getPlayersOnline = (callback) =>{
                 //Get file content console.txt after few ms
                 setTimeout(() => {
                     getConsoleFileContent(function (file_content) {
+                        if (file_content.length < 500) return;
                         const str_mod = file_content.slice(file_content.length - 500);
                         let sub_str_mod = str_mod.substring(str_mod.search("Players connected"));
                         //console.log(sub_str_mod);
@@ -98,7 +99,6 @@ const getPlayersOnline = (callback) =>{
                         let sub_str_name = sub_str_mod.substring(sub_str_mod.indexOf('-'));
                         //console.log(sub_str_name);
                         for (let i = 0; i < player_number; i++) {
-                            
                             let name = sub_str_name.substring(sub_str_name.indexOf('-') + 1,sub_str_name.indexOf('\n'));
                             //console.log(`Name : ${name}`);
                             cursor = name.length + 2;
